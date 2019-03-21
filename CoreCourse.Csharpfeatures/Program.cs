@@ -26,6 +26,7 @@ namespace CoreCourse.Csharpfeatures
             //Console.ReadKey();
             #endregion
 
+            #region NogCsharpVoorbeelden
             List<string> bookInfos = new List<string>();
             foreach (Book book in Book.GetAll())
             {
@@ -72,7 +73,21 @@ namespace CoreCourse.Csharpfeatures
             bookInfos.Add($"**# books with > 350 pages: {numberOfknownBooksWithOver350p:N0}");
             bookInfos.Add($"**# books starting with T: {numberOfknownBooksWithTheLetterT:N0}");
             bookInfos.Add($"**# books lent: {amountBooksLent:N0}");
+
+            numberOfknownBooksWithOver350p = knownBooks.Count(koala => (koala?.Pages ?? 0) > 350);
+            string firstLentBookTitle = knownBooks.FirstOrDefault(p => p?.IsLent == true)?.Title;
+
+            bookInfos.Add($"***First title lent: {firstLentBookTitle}");
+
+            IEnumerable<string> notLentOutTitles = knownBooks.Where(p => p?.IsLent == false)
+                                                             .Select(p => p.Title);
+
             PrintStrings(bookInfos);
+            #endregion
+
+            var site = new {Name = "https://www.howest.be", Rating = 99M};
+
+
         }
 
         static void PrintStrings(IEnumerable<string> strings)
