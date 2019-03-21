@@ -57,11 +57,21 @@ namespace CoreCourse.Csharpfeatures
             int totalPages = bookRepository.TotalPages();
             int totalPagesKnownBooks = Book.GetAll().TotalPages();
             int numberOfknownBooksWithOver350p = Book.GetAll().GetByMinimumPages(350).Count();
+            int numberOfknownBooksWithTheLetterT = Book.GetAll().GetByFirstLetter('T').Count();
 
             bookInfos.Add($"\r\nTotal pages in repository: {totalPages:N0}");
             bookInfos.Add($"Total pages of known books: {totalPagesKnownBooks:N0}");
             bookInfos.Add($"# books with > 350 pages: {numberOfknownBooksWithOver350p:N0}");
+            bookInfos.Add($"# books starting with T: {numberOfknownBooksWithTheLetterT:N0}");
 
+            var knownBooks = Book.GetAll();
+            numberOfknownBooksWithOver350p = knownBooks.GetByFilter(koala => (koala?.Pages ?? 0) > 350).Count();
+            numberOfknownBooksWithTheLetterT = knownBooks.GetByFilter(krokodil => krokodil?.Title?[0] == 'T').Count();
+            int amountBooksLent = knownBooks.GetByFilter(book => book?.IsLent == true).Count();
+
+            bookInfos.Add($"**# books with > 350 pages: {numberOfknownBooksWithOver350p:N0}");
+            bookInfos.Add($"**# books starting with T: {numberOfknownBooksWithTheLetterT:N0}");
+            bookInfos.Add($"**# books lent: {amountBooksLent:N0}");
             PrintStrings(bookInfos);
         }
 

@@ -73,7 +73,7 @@ namespace CoreCourse.Csharpfeatures.Models
                 Sequel = lotr2
             };
 
-            return new Book[] { littleprince, programming, null, warandpeace };
+            return new Book[] { littleprince, programming, null, warandpeace, lotr1, lotr2, lotr3 };
         }
 
     }

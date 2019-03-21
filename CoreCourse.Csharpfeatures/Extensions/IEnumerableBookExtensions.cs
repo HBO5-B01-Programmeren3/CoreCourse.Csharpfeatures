@@ -27,7 +27,24 @@ namespace CoreCourse.Csharpfeatures.Extensions
             /*Enumeratie via yield*/
 
             foreach (Book book in bookCollection)
+                if ((book?.Pages ?? 0) >= minimumPages)
                 yield return book;
+        }
+
+        public static IEnumerable<Book> GetByFirstLetter(this IEnumerable<Book> bookCollection, char firstLetter)
+        {
+            foreach(var book in bookCollection)
+                if (book?.Title?[0] == firstLetter)
+                    yield return book;
+        }
+
+        public static IEnumerable<Book> GetByFilter(this IEnumerable<Book> bookCollection, Func<Book, bool> selector)
+        {
+            foreach (var book in bookCollection)
+            {
+                if (selector(book))
+                    yield return book;
+            }
         }
     }
 }
